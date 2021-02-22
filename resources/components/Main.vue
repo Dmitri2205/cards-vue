@@ -19,6 +19,27 @@
                 Сортировка с конца
             </b-form-checkbox>
         </div>
+
+        <div class="d-flex flex-column">
+        	<b-button v-if="!addMode" @click="addMode = true" variant="success" style="width:200px">Добавить</b-button>
+        	<div v-else style="width:40%">
+        		<b-card>
+        		<p>Имя</p>
+                    <b-form-input class="mt-3" prepend="1" v-model="newItem.name" ></b-form-input>
+        		<p>Сайт</p>
+                    <b-form-input class="mt-3" prepend="1" v-model="newItem.website" ></b-form-input>
+        		<p>Телефон</p>
+                    <b-form-input class="mt-3" prepend="1" v-model="newItem.phone" ></b-form-input>
+        		<p>Имя компании</p>
+                    <b-form-input class="mt-3" prepend="1" v-model="newItem.company.name" ></b-form-input>
+        		<p>лозунг</p>
+                    <b-form-input class="mt-3" prepend="1" v-model="newItem.company.catchPhrase"></b-form-input>
+        	<b-button @click="add()" variant="success" style="width:200px">Добавить</b-button>
+        	<b-button @click="cancel()" variant="danger" style="width:200px">Отмена</b-button>
+        		</b-card>
+        	</div>
+        </div>
+
         <b-spinner v-if="loading" variant="success" label="Spinning" style="width:200px;height:200px;position:absolute;left:0;top:0;right:0;bottom:0;margin:auto"></b-spinner>
         <div v-else-if="!loading && sortedItems.length === 0 && filtered.length === 0" class="d-flex flex-row flex-wrap">
             <div v-for="(item,index) in items" :key="index">
@@ -99,6 +120,7 @@ export default {
     data() {
         return {
             search: null,
+            addMode:false,
             filtered: [],
             sortType: null,
             reversed: false,
@@ -109,9 +131,27 @@ export default {
                 { value: "site", text: 'Сайт' },
                 { value: "none", text: 'Обычный вывод' },
             ],
+            newItem:{
+            	name:null,
+            	website:null,
+            	phone:null,
+            	company:{
+            		name:null,
+            		catchPhrase:null,
+            	},
+            },
         };
     },
     methods: {
+        add(){
+        	let data = this.newItem;
+        	this.$store.dispatch('globalAction',{type:'addItem',data:data});
+        	this.addMode = false;
+
+        },
+        cancel(){
+        	this.addMode = false;
+        },
         goToItem(id) {
             let itemData = this.items.find((item) => item.id === id);
             this.$router.push({ name: 'item', params: { id: id, data: itemData } });
@@ -146,7 +186,7 @@ export default {
                         return a.website < b.website ? 1 : -1;
                     };
                 });
-	            this.sortedItems.reverse();
+                this.sortedItems.reverse();
             } else if (ctx.sortType === 'none') {
                 this.sortedItems = [];
             };

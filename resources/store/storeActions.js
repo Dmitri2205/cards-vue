@@ -33,6 +33,14 @@ const storeAction = function(type, data, state) {
                 mutationType = "items";
                 resolve({ payload: deleted, type: mutationType });
                 break;
+            case "addItem":
+                let added = [...state.items];
+                let newItem = data;
+                newItem.id = added.length+1;
+                added.push(newItem);
+                mutationType = 'items';
+                resolve({payload:added,type:mutationType});
+                break;
         };
     });
 };
