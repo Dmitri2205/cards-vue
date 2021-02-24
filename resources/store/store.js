@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         items: null,
-        isLoading:true,
+        isLoading: true,
     },
     getters: {
         globalGetter(store, type) {
@@ -19,11 +19,11 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        globalAction(ctx,payload) {
+        globalAction(ctx, payload) {
             let actionType = payload.type;
             let data = payload.data;
             let state = this.state;
-            const action = storeActions(actionType,data,state);
+            const action = storeActions(actionType, data, state);
             action.then((result) => {
                     let params = {
                         data: result.payload,

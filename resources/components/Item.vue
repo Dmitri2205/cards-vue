@@ -22,16 +22,25 @@
             </b-card-text>
         </b-card>
         <b-card header="Редактировать информацию" v-if="editMode" style="w-80 rounded-25">
-        	<b-list-group>
-			  <b-list-group-item><b-form-input v-model="itemInfo.name" placeholder="Имя"></b-form-input></b-list-group-item>
-			  <b-list-group-item><b-form-input v-model="itemInfo.website" placeholder="Сайт"></b-form-input></b-list-group-item>
-			  <b-list-group-item><b-form-input v-model="itemInfo.phone" placeholder="Телефон"></b-form-input></b-list-group-item>
-			  <b-list-group-item><b-form-input v-model="itemInfo.company.name" placeholder="Имя компании"></b-form-input></b-list-group-item>
-			  <b-list-group-item> <b-form-input v-model="itemInfo.company.catchPhrase" placeholder="Лозунг компании"></b-form-input></b-list-group-item>
-			</b-list-group>
-			<b-button @click="changeItem()" class="my-3">Сохранить</b-button>
-		</b-card>
-
+            <b-list-group>
+                <b-list-group-item>
+                    <b-form-input v-model="itemInfo.name" placeholder="Имя"></b-form-input>
+                </b-list-group-item>
+                <b-list-group-item>
+                    <b-form-input v-model="itemInfo.website" placeholder="Сайт"></b-form-input>
+                </b-list-group-item>
+                <b-list-group-item>
+                    <b-form-input v-model="itemInfo.phone" placeholder="Телефон"></b-form-input>
+                </b-list-group-item>
+                <b-list-group-item>
+                    <b-form-input v-model="itemInfo.company.name" placeholder="Имя компании"></b-form-input>
+                </b-list-group-item>
+                <b-list-group-item>
+                    <b-form-input v-model="itemInfo.company.catchPhrase" placeholder="Лозунг компании"></b-form-input>
+                </b-list-group-item>
+            </b-list-group>
+            <b-button @click="changeItem()" class="my-3">Сохранить</b-button>
+        </b-card>
     </div>
 </template>
 <script>
@@ -45,23 +54,23 @@ export default {
     },
     methods: {
         edit() {
-        	if (this.editMode === false) {
-            this.editMode = true;
-        	}else{
-            this.editMode = false;
-        	};
+            if (this.editMode === false) {
+                this.editMode = true;
+            } else {
+                this.editMode = false;
+            };
 
         },
-        changeItem(){
-         	let data = this.itemInfo;
-         	console.log(data);
-         	this.$store.dispatch('globalAction',{type:'changeItem',data:data});
+        changeItem() {
+            let data = this.itemInfo;
+            console.log(data);
+            this.$store.dispatch('globalAction', { type: 'changeItem', data: data });
 
         },
-        deleteItem(){
-         	let data = this.itemInfo;
-         	this.$store.dispatch('globalAction',{type:'delete',data:data});
-         	this.$router.push({path:'/main'});
+        deleteItem() {
+            let data = this.itemInfo;
+            this.$store.dispatch('globalAction', { type: 'delete', data: data });
+            this.$router.push({ path: '/main' });
         },
     }
 }

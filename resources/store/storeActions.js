@@ -28,18 +28,18 @@ const storeAction = function(type, data, state) {
                 break;
             case 'delete':
                 let deleted = [...state.items];
-                let index = deleted.findIndex((item)=>item.name === data.name);
-                deleted.splice(index,1);
+                let index = deleted.findIndex((item) => item.name === data.name);
+                deleted.splice(index, 1);
                 mutationType = "items";
                 resolve({ payload: deleted, type: mutationType });
                 break;
             case "addItem":
                 let added = [...state.items];
                 let newItem = data;
-                newItem.id = added.length+1;
+                newItem.id = added.length + 1;
                 added.push(newItem);
                 mutationType = 'items';
-                resolve({payload:added,type:mutationType});
+                resolve({ payload: added, type: mutationType });
                 break;
         };
     });
